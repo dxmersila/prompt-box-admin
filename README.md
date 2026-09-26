@@ -1,18 +1,18 @@
-# Armin Admin
+# Prompt Box Admin
 
-Armin Admin is the administrative interface of the Armin Template ecosystem.
+Prompt Box Admin is the administrative interface for **Prompt Box**, a digital-product application built on the Armin Admin Template foundation.
 
-It is a separate React application used by administrators to manage the application through the Armin API.
+It is a separate React application used by administrators to manage Prompt Box through the Prompt Box API.
 
-## Role in the Armin Ecosystem
+## Role in the Prompt Box Ecosystem
 
-Armin consists of three independent applications:
+Prompt Box consists of three independent applications:
 
-* **Armin API** — Laravel backend and source of truth for business rules, authorization, data, orders, payments, and subscriptions.
-* **Armin Admin** — React-based administrative interface for management workflows.
-* **Armin Web** — Next.js public-facing web application.
+* **Prompt Box API** — Laravel backend and source of truth for business rules, authorization, data, orders, payments, subscriptions, and protected content.
+* **Prompt Box Admin** — React-based administrative interface for management workflows.
+* **Prompt Box Web** — Next.js public-facing web application for the Prompt Box product experience.
 
-The Admin application does not contain authoritative business rules. It consumes the API and provides the administrative user interface.
+The Admin application consumes the Prompt Box API and provides the administrative user interface. Authoritative business rules remain in the API.
 
 ## Tech Stack
 
@@ -30,7 +30,7 @@ The Admin application does not contain authoritative business rules. It consumes
 
 * Node.js
 * npm
-* A running Armin API instance
+* A running Prompt Box API instance
 
 ## Environment
 
@@ -40,13 +40,13 @@ Create a local environment file:
 cp .env.example .env.local
 ```
 
-The default development configuration is:
+Set the API base URL to the Prompt Box API:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8080/api/v1
 ```
 
-Set `VITE_API_BASE_URL` to the base URL of the Armin API used by the Admin application.
+For production, configure the environment according to the target Prompt Box deployment.
 
 ## Development
 
@@ -78,59 +78,37 @@ Run ESLint:
 npm run lint
 ```
 
-Preview the production build:
+## Architecture
 
-```bash
-npm run preview
-```
-
-## Repository Structure
-
-The application source code is located in:
-
-```text
-src/
-```
-
-The Admin application is intentionally maintained as an independent frontend repository. It does not depend on the implementation details of the Web application.
-
-## Relationship to the API
-
-The Armin API is the authoritative backend.
+Prompt Box Admin follows the reusable architecture established by the **Armin Admin Template**.
 
 The Admin application is responsible for:
 
-* Administrative navigation
-* Tables and data presentation
-* Forms and filters
-* Pagination
-* Administrative workflows
-* Feedback and UI state
-* Localization and RTL/LTR presentation
-* Responsive administrative UX
+* Administrative user interface and workflows
+* Authentication and session handling
+* Management screens for Prompt Box resources
+* Form and interaction handling
+* API communication
+* Client-side presentation and navigation
 
-Business rules and authorization remain enforced by the API.
+Business rules, authorization decisions, validation enforced by the backend, pricing, payments, subscriptions, and access control remain the responsibility of the Prompt Box API.
 
-## Armin Template
+## Armin Foundation
 
-Armin Admin is part of the reusable Armin Template ecosystem.
+Prompt Box Admin was created from the stable **Armin Admin Template**.
 
-The central Armin Template documentation is maintained separately in the API repository. Product-specific work belongs to the product instance created from the Template.
+The Template provides the reusable application foundation, while Prompt Box contains product-specific requirements, UI, content, and configuration.
 
-For example:
+Product-specific changes should remain in Prompt Box. Reusable architectural improvements should only be introduced into the Armin Admin Template when they represent a genuine requirement that benefits multiple product instances.
 
-```text
-Armin Template
-      ↓
-Product Instance
-      ↓
-Armin Admin
-      ↓
-Product-specific administration
-```
+## Repository
+
+GitHub:
+
+`git@github.com:dxmersila/prompt-box-admin.git`
 
 ## Status
 
-**Complete / Stable**
+**Productionization in Progress**
 
-The current Admin application represents the stable administrative baseline of the Armin Template.
+Prompt Box Admin is the administrative application for the Prompt Box product instance and is being prepared for production use.
