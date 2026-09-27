@@ -4,6 +4,7 @@ import { ShoppingCart } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useLanguage } from '../../i18n/useLanguage'
 import BackButton from '../../components/ui/BackButton'
+import Button from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
 import PageHeader from '../../components/ui/PageHeader'
 import Spinner from '../../components/ui/feedback/Spinner'
@@ -86,13 +87,13 @@ export default function OrderDetailPage() {
         />
 
         <div className="flex flex-wrap gap-3">
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => void loadOrder()}
-            className="inline-flex items-center justify-center rounded-md border border-border bg-surface px-3 py-1.5 text-sm font-medium text-foreground transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
           >
             {t('common.retry')}
-          </button>
+          </Button>
 
           <BackButton to="/admin/orders">
             {t('common.back')}
