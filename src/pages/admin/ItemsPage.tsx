@@ -59,11 +59,13 @@ const emptyFilters: ItemFilters = {
 interface ItemActionsProps {
   item: AdminItem
   onDelete: (item: AdminItem) => void
+  disabled?: boolean
 }
 
 function ItemActions({
   item,
   onDelete,
+  disabled = false,
 }: ItemActionsProps) {
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -72,6 +74,7 @@ function ItemActions({
     <div className="flex items-center justify-center gap-1">
       <IconButton
         type="button"
+        disabled={disabled}
         onClick={() => navigate(`/admin/items/${item.id}`)}
         title={t('items.table.view')}
         aria-label={`${t('items.table.view')} ${item.title}`}
@@ -81,6 +84,7 @@ function ItemActions({
 
       <IconButton
         type="button"
+        disabled={disabled}
         onClick={() => navigate(`/admin/items/${item.id}/edit`)}
         title={t('items.table.edit')}
         aria-label={`${t('items.table.edit')} ${item.title}`}
@@ -90,6 +94,7 @@ function ItemActions({
 
       <IconButton
         type="button"
+        disabled={disabled}
         onClick={() => onDelete(item)}
         title={t('items.table.delete')}
         aria-label={`${t('items.table.delete')} ${item.title}`}
@@ -104,11 +109,13 @@ function ItemActions({
 interface ItemsTableProps {
   items: AdminItem[]
   onDelete: (item: AdminItem) => void
+  deletingItemId: number | null
 }
 
 function ItemsTable({
   items,
   onDelete,
+  deletingItemId,
 }: ItemsTableProps) {
   const { t } = useTranslation()
   const { locale } = useLanguage()
@@ -165,23 +172,21 @@ function ItemsTable({
       className: 'w-20 text-center',
       render: (item) =>
         item.access_type === 'paid' ? (
-          <button
-            type="button"
+          <span
             title={formatPrice(item.price, locale)}
             aria-label={`${t('items.table.paidProduct')} - ${formatPrice(item.price, locale)}`}
-            className="mx-auto inline-flex size-9 items-center justify-center rounded-full text-warning transition hover:bg-warning/10 focus:outline-none focus:ring-2 focus:ring-ring"
+            className="mx-auto inline-flex size-9 items-center justify-center rounded-full text-warning"
           >
             <CircleDollarSign className="size-5" />
-          </button>
+          </span>
         ) : (
-          <button
-            type="button"
+          <span
             title={t('items.table.free')}
             aria-label={t('items.table.freeProduct')}
-            className="mx-auto inline-flex size-9 items-center justify-center rounded-full text-success transition hover:bg-success/10 focus:outline-none focus:ring-2 focus:ring-ring"
+            className="mx-auto inline-flex size-9 items-center justify-center rounded-full text-success"
           >
             <Gift className="size-5" />
-          </button>
+          </span>
         ),
     },
     {
@@ -192,6 +197,7 @@ function ItemsTable({
         <ItemActions
           item={item}
           onDelete={onDelete}
+          disabled={deletingItemId !== null}
         />
       ),
     },
@@ -523,6 +529,7 @@ export default function ItemsPage() {
             onDelete={(item) => {
               void handleDelete(item)
             }}
+            deletingItemId={deletingItemId}
           />
         )}
 

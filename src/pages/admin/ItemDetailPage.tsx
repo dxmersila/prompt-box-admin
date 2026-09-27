@@ -113,7 +113,7 @@ export default function ItemDetailPage() {
     return (
       <section className="space-y-4">
         <Alert variant="error">
-          خطا در دریافت اطلاعات محصول.
+          {t('items.detail.loadError')}
         </Alert>
 
         <div className="flex flex-wrap gap-3">
