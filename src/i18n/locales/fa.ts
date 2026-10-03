@@ -19,6 +19,8 @@ const fa = {
     view: 'مشاهده',
     edit: 'ویرایش',
     delete: 'حذف',
+    showPassword: 'نمایش رمز عبور',
+    hidePassword: 'مخفی کردن رمز عبور',
   },
 
   tags: {

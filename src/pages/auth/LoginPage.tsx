@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { appConfig } from '../../config/app'
 import { useLocation, useNavigate } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import Button from '../../components/ui/Button'
@@ -53,7 +54,7 @@ export default function LoginPage() {
     <div className="rounded-xl border border-border bg-surface p-8 shadow-sm">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-foreground">
-          {t('auth.title')}
+          {appConfig.name}
         </h1>
 
         <p className="mt-1 text-sm text-muted-foreground">

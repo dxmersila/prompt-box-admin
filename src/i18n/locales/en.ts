@@ -19,6 +19,8 @@ const en = {
     view: 'View',
     edit: 'Edit',
     delete: 'Delete',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
   },
 
   tags: {

@@ -2,6 +2,7 @@ import { LogOut, User, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, useNavigate } from 'react-router'
+import { appConfig } from '../../config/app'
 import { useAuth } from '../../auth/useAuth'
 import Spinner from '../ui/feedback/Spinner'
 
@@ -56,7 +57,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         <div className="flex min-h-16 items-center justify-between border-b border-border px-6 py-4">
           <h1 className="text-lg font-semibold text-foreground">
-            Armin Admin
+            {appConfig.name}
           </h1>
 
           <button

@@ -1,4 +1,6 @@
-import type { InputHTMLAttributes } from 'react'
+import { useState, type InputHTMLAttributes } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Eye, EyeOff } from 'lucide-react'
 
 type InputSize = 'sm' | 'md' | 'lg'
 
@@ -27,6 +29,12 @@ export default function Input({
   className = '',
   ...props
 }: InputProps) {
+  const { t } = useTranslation()
+  const [showPassword, setShowPassword] = useState(false)
+
+  const isPassword = props.type === 'password'
+  const inputType = isPassword && showPassword ? 'text' : props.type
+
   const describedBy = error
     ? `${id}-error`
     : hint
@@ -53,9 +61,11 @@ export default function Input({
         </label>
       )}
 
-      <input
-        {...props}
-        id={id}
+      <div className="relative">
+        <input
+          {...props}
+          type={inputType}
+          id={id}
         required={required}
         disabled={disabled}
         aria-invalid={Boolean(error)}
@@ -66,13 +76,32 @@ export default function Input({
           'transition',
           'focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20',
           'disabled:cursor-not-allowed disabled:opacity-50',
+          isPassword ? 'pe-10' : '',
           error
             ? 'border-danger focus:border-danger focus:ring-danger/20'
             : 'border-input',
           sizeClasses[size],
           className,
         ].join(' ')}
-      />
+        />
+
+        {isPassword && (
+          <button
+            type="button"
+            aria-label={showPassword ? t('common.hidePassword') : t('common.showPassword')}
+            title={showPassword ? t('common.hidePassword') : t('common.showPassword')}
+            onClick={() => setShowPassword((visible) => !visible)}
+            disabled={disabled}
+            className="absolute inset-y-0 end-0 inline-flex w-10 items-center justify-center text-muted-foreground transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {showPassword ? (
+              <EyeOff className="size-4" />
+            ) : (
+              <Eye className="size-4" />
+            )}
+          </button>
+        )}
+      </div>
 
       {error && (
         <p

@@ -8,7 +8,7 @@ interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  name: 'Armin Admin',
+  name: 'Prompt Box Admin',
   defaultLocale: 'fa',
   defaultTheme: 'dark',
 }
