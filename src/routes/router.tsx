@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router'
 import AdminLayout from '../layouts/AdminLayout'
 import AuthLayout from '../layouts/AuthLayout'
 import ProtectedRoute from './ProtectedRoute'
+import Spinner from '../components/ui/feedback/Spinner'
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,11 @@ export const router = createBrowserRouter([
   {
     path: '/admin',
     Component: ProtectedRoute,
+    HydrateFallback: () => (
+      <section className="flex min-h-screen items-center justify-center">
+        <Spinner size="lg" />
+      </section>
+    ),
     children: [
       {
         Component: AdminLayout,
