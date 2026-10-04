@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLanguage } from '../../i18n/useLanguage'
 import {
@@ -36,6 +36,8 @@ export default function ItemDetailPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
 
+  const [hasLoaded, setHasLoaded] = useState(false)
+
   const {
     data: item,
     error,
@@ -43,31 +45,27 @@ export default function ItemDetailPage() {
     execute,
   } = useAsync<AdminItem>()
 
-  const loadItem = useCallback(() => {
+  const loadItem = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const itemId = Number(id)
 
     if (!Number.isInteger(itemId) || itemId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return execute(() => getAdminItem(itemId))
+    try {
+      await execute(() => getAdminItem(itemId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [execute, id])
 
   useEffect(() => {
     void loadItem()
   }, [loadItem])
-
-  if (isLoading) {
-    return (
-      <section className="flex min-h-64 items-center justify-center">
-        <Spinner size="lg" />
-      </section>
-    )
-  }
 
   if (!id || !Number.isInteger(Number(id)) || Number(id) <= 0) {
     return (
@@ -79,6 +77,14 @@ export default function ItemDetailPage() {
         <BackButton to="/admin/items">
           {t('common.back')}
         </BackButton>
+      </section>
+    )
+  }
+
+  if (isLoading || !hasLoaded) {
+    return (
+      <section className="flex min-h-64 items-center justify-center">
+        <Spinner size="lg" />
       </section>
     )
   }

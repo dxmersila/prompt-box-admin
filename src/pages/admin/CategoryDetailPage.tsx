@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FolderTree,
@@ -26,6 +26,8 @@ export default function CategoryDetailPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
 
+  const [hasLoaded, setHasLoaded] = useState(false)
+
   const {
     data: category,
     error,
@@ -33,31 +35,27 @@ export default function CategoryDetailPage() {
     execute,
   } = useAsync<AdminCategory>()
 
-  const loadCategory = useCallback(() => {
+  const loadCategory = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const categoryId = Number(id)
 
     if (!Number.isInteger(categoryId) || categoryId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return execute(() => getAdminCategory(categoryId))
+    try {
+      await execute(() => getAdminCategory(categoryId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [execute, id])
 
   useEffect(() => {
     void loadCategory()
   }, [loadCategory])
-
-  if (isLoading) {
-    return (
-      <section className="flex min-h-64 items-center justify-center">
-        <Spinner size="lg" />
-      </section>
-    )
-  }
 
   if (!id || !Number.isInteger(Number(id)) || Number(id) <= 0) {
     return (
@@ -69,6 +67,14 @@ export default function CategoryDetailPage() {
         <BackButton to="/admin/categories">
           {t('common.back')}
         </BackButton>
+      </section>
+    )
+  }
+
+  if (isLoading || !hasLoaded) {
+    return (
+      <section className="flex min-h-64 items-center justify-center">
+        <Spinner size="lg" />
       </section>
     )
   }
