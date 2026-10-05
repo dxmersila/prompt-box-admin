@@ -97,7 +97,7 @@ Business rules, authorization decisions, validation enforced by the backend, pri
 
 Prompt Box Admin was created from the stable **Armin Admin Template**.
 
-The Template provides the reusable application foundation, while Prompt Box contains product-specific requirements, UI, content, and configuration.
+The Template provides the reusable application foundation, while this repository contains Prompt Box-specific requirements, UI, content, and configuration.
 
 Product-specific changes should remain in Prompt Box. Reusable architectural improvements should only be introduced into the Armin Admin Template when they represent a genuine requirement that benefits multiple product instances.
 
