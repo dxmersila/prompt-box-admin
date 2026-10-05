@@ -60,7 +60,7 @@ const fa = {
 
   dashboard: {
     title: 'داشبورد',
-    welcome: 'به پنل مدیریت Armin خوش آمدید',
+    welcome: 'به پنل مدیریت Prompt Box خوش آمدید',
     loadError: 'خطا در دریافت اطلاعات داشبورد',
     retry: 'تلاش مجدد',
     users: 'کاربران',

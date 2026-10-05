@@ -60,7 +60,7 @@ const en = {
 
   dashboard: {
     title: 'Dashboard',
-    welcome: 'Welcome to Armin Admin',
+    welcome: 'Welcome to Prompt Box Admin',
     loadError: 'Failed to load dashboard data',
     retry: 'Retry',
     users: 'Users',
