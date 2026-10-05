@@ -35,6 +35,7 @@ export default function EditCategoryPage() {
 
   const [values, setValues] =
     useState<CategoryFormValues | null>(null)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const {
     data: category,
@@ -49,18 +50,22 @@ export default function EditCategoryPage() {
     execute: executeSubmit,
   } = useAsync<AdminCategory>()
 
-  const loadCategory = useCallback(() => {
+  const loadCategory = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const categoryId = Number(id)
 
     if (!Number.isInteger(categoryId) || categoryId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return executeLoad(() => getAdminCategory(categoryId))
+    try {
+      await executeLoad(() => getAdminCategory(categoryId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [executeLoad, id])
 
   useEffect(() => {
@@ -126,7 +131,7 @@ export default function EditCategoryPage() {
     )
   }
 
-  if (isLoadingCategory) {
+  if (isLoadingCategory || !hasLoaded) {
     return (
       <section className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />

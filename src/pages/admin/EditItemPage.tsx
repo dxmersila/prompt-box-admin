@@ -144,6 +144,7 @@ function EditItemForm({
 export default function EditItemPage() {
   const { id } = useParams()
   const { t } = useTranslation()
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const {
     data: item,
@@ -170,10 +171,14 @@ export default function EditItemPage() {
       return
     }
 
-    await Promise.all([
-      executeItem(() => getAdminItem(numericId)),
-      executeCategories(getAllCategories),
-    ])
+    try {
+      await Promise.all([
+        executeItem(() => getAdminItem(numericId)),
+        executeCategories(getAllCategories),
+      ])
+    } finally {
+      setHasLoaded(true)
+    }
   }, [id, executeItem, executeCategories])
 
   useEffect(() => {
@@ -200,7 +205,7 @@ export default function EditItemPage() {
     )
   }
 
-  if (isItemLoading || areCategoriesLoading) {
+  if (isItemLoading || areCategoriesLoading || !hasLoaded) {
     return (
       <div className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />

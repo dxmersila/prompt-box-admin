@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLanguage } from '../../i18n/useLanguage'
 import {
@@ -43,6 +43,8 @@ export default function UserDetailPage() {
   const { id } = useParams()
   const { t } = useTranslation()
 
+  const [hasLoaded, setHasLoaded] = useState(false)
+
   const {
     data: user,
     error,
@@ -50,25 +52,29 @@ export default function UserDetailPage() {
     execute,
   } = useAsync<AdminUser>()
 
-  const loadUser = useCallback(() => {
+  const loadUser = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const userId = Number(id)
 
     if (!Number.isInteger(userId) || userId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return execute(() => getAdminUser(userId))
+    try {
+      await execute(() => getAdminUser(userId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [execute, id])
 
   useEffect(() => {
     void loadUser()
   }, [loadUser])
 
-  if (isLoading) {
+  if (isLoading || !hasLoaded) {
     return (
       <section className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />

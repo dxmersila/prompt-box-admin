@@ -1,7 +1,7 @@
 import { Pencil, BadgeCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLanguage } from '../../i18n/useLanguage'
 import BackButton from '../../components/ui/BackButton'
 import Button from '../../components/ui/Button'
@@ -23,6 +23,8 @@ export default function SubscriptionPlanDetailPage() {
 
   const { id } = useParams()
 
+  const [hasLoaded, setHasLoaded] = useState(false)
+
   const {
     data: plan,
     error,
@@ -30,25 +32,29 @@ export default function SubscriptionPlanDetailPage() {
     execute,
   } = useAsync<AdminSubscriptionPlan>()
 
-  const loadPlan = useCallback(() => {
+  const loadPlan = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const planId = Number(id)
 
     if (!Number.isInteger(planId) || planId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return execute(() => getAdminSubscriptionPlan(planId))
+    try {
+      await execute(() => getAdminSubscriptionPlan(planId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [execute, id])
 
   useEffect(() => {
     void loadPlan()
   }, [loadPlan])
 
-  if (isLoading) {
+  if (isLoading || !hasLoaded) {
     return (
       <section className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />

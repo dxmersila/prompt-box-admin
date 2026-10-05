@@ -58,6 +58,7 @@ export default function EditUserPage() {
 
   const [values, setValues] =
     useState<UserFormValues | null>(null)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const {
     data: user,
@@ -72,18 +73,22 @@ export default function EditUserPage() {
     execute: executeSubmit,
   } = useAsync<AdminUser>()
 
-  const loadUser = useCallback(() => {
+  const loadUser = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const userId = Number(id)
 
     if (!Number.isInteger(userId) || userId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return executeLoad(() => getAdminUser(userId))
+    try {
+      await executeLoad(() => getAdminUser(userId))
+    } finally {
+      setHasLoaded(true)
+    }
   }, [executeLoad, id])
 
   useEffect(() => {
@@ -151,7 +156,7 @@ export default function EditUserPage() {
     )
   }
 
-  if (isLoadingUser) {
+  if (isLoadingUser || !hasLoaded) {
     return (
       <section className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />

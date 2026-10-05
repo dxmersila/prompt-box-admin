@@ -36,6 +36,7 @@ export default function EditSubscriptionPlanPage() {
 
   const [values, setValues] =
     useState<SubscriptionPlanFormValues | null>(null)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const {
     data: plan,
@@ -50,20 +51,24 @@ export default function EditSubscriptionPlanPage() {
     execute: executeSubmit,
   } = useAsync<AdminSubscriptionPlan>()
 
-  const loadPlan = useCallback(() => {
+  const loadPlan = useCallback(async () => {
     if (!id) {
-      return Promise.resolve(undefined)
+      return
     }
 
     const planId = Number(id)
 
     if (!Number.isInteger(planId) || planId <= 0) {
-      return Promise.resolve(undefined)
+      return
     }
 
-    return executeLoad(() =>
-      getAdminSubscriptionPlan(planId),
-    )
+    try {
+      await executeLoad(() =>
+        getAdminSubscriptionPlan(planId),
+      )
+    } finally {
+      setHasLoaded(true)
+    }
   }, [executeLoad, id])
 
   useEffect(() => {
@@ -138,7 +143,7 @@ export default function EditSubscriptionPlanPage() {
     )
   }
 
-  if (isLoadingPlan) {
+  if (isLoadingPlan || !hasLoaded) {
     return (
       <section className="flex min-h-64 items-center justify-center">
         <Spinner size="lg" />
