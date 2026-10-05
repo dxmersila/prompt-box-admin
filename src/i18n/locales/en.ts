@@ -494,6 +494,11 @@ const en = {
       deleteWarning: 'This action cannot be undone',
     },
   },
+  notFound: {
+    title: 'Page not found',
+    description: 'The page you are looking for does not exist or may have been moved.',
+    button: 'Go to dashboard',
+  },
 }
 
 export default en

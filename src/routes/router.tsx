@@ -19,6 +19,10 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: '*',
+    lazy: async () => ({ Component: (await import('../pages/NotFoundPage')).default }),
+  },
+  {
     path: '/admin',
     Component: ProtectedRoute,
     HydrateFallback: () => (

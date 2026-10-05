@@ -494,6 +494,11 @@ const fa = {
       deleteWarning: 'این عملیات قابل بازگشت نیست',
     },
   },
+  notFound: {
+    title: 'صفحه پیدا نشد',
+    description: 'صفحه‌ای که به دنبال آن هستید وجود ندارد یا ممکن است منتقل شده باشد.',
+    button: 'رفتن به داشبورد',
+  },
 }
 
 export default fa
