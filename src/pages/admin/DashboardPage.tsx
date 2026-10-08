@@ -21,6 +21,20 @@ interface DashboardCardProps {
   icon: typeof Users
 }
 
+interface AnalyticsPeriodCardProps {
+  title: string
+  visits: number
+  uniqueVisitors: number
+  promptAccess: number
+  promptCopies: number
+  labels: {
+    visits: string
+    uniqueVisitors: string
+    promptAccess: string
+    promptCopies: string
+  }
+}
+
 function DashboardCard({
   title,
   value,
@@ -43,6 +57,61 @@ function DashboardCard({
           <Icon className="size-5 text-muted-foreground" />
         </div>
       </div>
+    </Card>
+  )
+}
+
+function AnalyticsPeriodCard({
+  title,
+  visits,
+  uniqueVisitors,
+  promptAccess,
+  promptCopies,
+  labels,
+}: AnalyticsPeriodCardProps) {
+  return (
+    <Card className="p-6">
+      <h3 className="text-base font-semibold text-foreground">
+        {title}
+      </h3>
+
+      <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4">
+        <div>
+          <dt className="text-sm text-muted-foreground">
+            {labels.visits}
+          </dt>
+          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
+            {visits}
+          </dd>
+        </div>
+
+        <div>
+          <dt className="text-sm text-muted-foreground">
+            {labels.uniqueVisitors}
+          </dt>
+          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
+            {uniqueVisitors}
+          </dd>
+        </div>
+
+        <div>
+          <dt className="text-sm text-muted-foreground">
+            {labels.promptAccess}
+          </dt>
+          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
+            {promptAccess}
+          </dd>
+        </div>
+
+        <div>
+          <dt className="text-sm text-muted-foreground">
+            {labels.promptCopies}
+          </dt>
+          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
+            {promptCopies}
+          </dd>
+        </div>
+      </dl>
     </Card>
   )
 }
@@ -115,6 +184,72 @@ export default function DashboardPage() {
           </>
         )}
       </div>
+
+      {stats !== null && stats !== undefined && (
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">
+            {t('dashboard.analytics')}
+          </h2>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <AnalyticsPeriodCard
+              title={t('dashboard.today')}
+              visits={stats.analytics.today.visits}
+              uniqueVisitors={stats.analytics.today.unique_visitors}
+              promptAccess={stats.analytics.today.prompt_access}
+              promptCopies={stats.analytics.today.prompt_copies}
+              labels={{
+                visits: t('dashboard.visits'),
+                uniqueVisitors: t('dashboard.uniqueVisitors'),
+                promptAccess: t('dashboard.promptAccess'),
+                promptCopies: t('dashboard.promptCopies'),
+              }}
+            />
+
+            <AnalyticsPeriodCard
+              title={t('dashboard.week')}
+              visits={stats.analytics.week.visits}
+              uniqueVisitors={stats.analytics.week.unique_visitors}
+              promptAccess={stats.analytics.week.prompt_access}
+              promptCopies={stats.analytics.week.prompt_copies}
+              labels={{
+                visits: t('dashboard.visits'),
+                uniqueVisitors: t('dashboard.uniqueVisitors'),
+                promptAccess: t('dashboard.promptAccess'),
+                promptCopies: t('dashboard.promptCopies'),
+              }}
+            />
+
+            <AnalyticsPeriodCard
+              title={t('dashboard.month')}
+              visits={stats.analytics.month.visits}
+              uniqueVisitors={stats.analytics.month.unique_visitors}
+              promptAccess={stats.analytics.month.prompt_access}
+              promptCopies={stats.analytics.month.prompt_copies}
+              labels={{
+                visits: t('dashboard.visits'),
+                uniqueVisitors: t('dashboard.uniqueVisitors'),
+                promptAccess: t('dashboard.promptAccess'),
+                promptCopies: t('dashboard.promptCopies'),
+              }}
+            />
+
+            <AnalyticsPeriodCard
+              title={t('dashboard.year')}
+              visits={stats.analytics.year.visits}
+              uniqueVisitors={stats.analytics.year.unique_visitors}
+              promptAccess={stats.analytics.year.prompt_access}
+              promptCopies={stats.analytics.year.prompt_copies}
+              labels={{
+                visits: t('dashboard.visits'),
+                uniqueVisitors: t('dashboard.uniqueVisitors'),
+                promptAccess: t('dashboard.promptAccess'),
+                promptCopies: t('dashboard.promptCopies'),
+              }}
+            />
+          </div>
+        </section>
+      )}
     </section>
   )
 }
