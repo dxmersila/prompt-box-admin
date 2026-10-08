@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  Activity,
+  Copy,
+  Eye,
   FolderKanban,
   LayoutDashboard,
   Package,
@@ -77,7 +80,8 @@ function AnalyticsPeriodCard({
 
       <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4">
         <div>
-          <dt className="text-sm text-muted-foreground">
+          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Activity className="size-4" />
             {labels.visits}
           </dt>
           <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
@@ -86,7 +90,8 @@ function AnalyticsPeriodCard({
         </div>
 
         <div>
-          <dt className="text-sm text-muted-foreground">
+          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Users className="size-4" />
             {labels.uniqueVisitors}
           </dt>
           <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
@@ -95,7 +100,8 @@ function AnalyticsPeriodCard({
         </div>
 
         <div>
-          <dt className="text-sm text-muted-foreground">
+          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Eye className="size-4" />
             {labels.promptAccess}
           </dt>
           <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
@@ -104,7 +110,8 @@ function AnalyticsPeriodCard({
         </div>
 
         <div>
-          <dt className="text-sm text-muted-foreground">
+          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Copy className="size-4" />
             {labels.promptCopies}
           </dt>
           <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
