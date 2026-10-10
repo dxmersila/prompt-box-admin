@@ -72,52 +72,31 @@ function AnalyticsPeriodCard({
   promptCopies,
   labels,
 }: AnalyticsPeriodCardProps) {
+  const metrics = [
+    { label: labels.visits, value: visits, Icon: Activity },
+    { label: labels.uniqueVisitors, value: uniqueVisitors, Icon: Users },
+    { label: labels.promptAccess, value: promptAccess, Icon: Eye },
+    { label: labels.promptCopies, value: promptCopies, Icon: Copy },
+  ]
+
   return (
-    <Card className="p-6">
-      <h3 className="text-base font-semibold text-foreground">
+    <Card className="min-w-0 p-4 sm:p-5 xl:p-6">
+      <h3 className="text-start text-base font-semibold text-foreground">
         {title}
       </h3>
 
-      <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4">
-        <div>
-          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Activity className="size-4" />
-            {labels.visits}
-          </dt>
-          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
-            {visits}
-          </dd>
-        </div>
-
-        <div>
-          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Users className="size-4" />
-            {labels.uniqueVisitors}
-          </dt>
-          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
-            {uniqueVisitors}
-          </dd>
-        </div>
-
-        <div>
-          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Eye className="size-4" />
-            {labels.promptAccess}
-          </dt>
-          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
-            {promptAccess}
-          </dd>
-        </div>
-
-        <div>
-          <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Copy className="size-4" />
-            {labels.promptCopies}
-          </dt>
-          <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">
-            {promptCopies}
-          </dd>
-        </div>
+      <dl className="mt-5 grid grid-cols-1 gap-y-4">
+        {metrics.map(({ label, value, Icon }) => (
+          <div key={label} className="min-w-0">
+            <dt className="flex min-w-0 items-start gap-2 text-start text-sm text-muted-foreground">
+              <Icon className="mt-0.5 size-4 shrink-0" />
+              <span className="min-w-0 break-words">{label}</span>
+            </dt>
+            <dd className="mt-1 break-words text-start text-2xl font-semibold tabular-nums tracking-tight text-foreground">
+              {value}
+            </dd>
+          </div>
+        ))}
       </dl>
     </Card>
   )
