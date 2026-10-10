@@ -1,8 +1,8 @@
 export interface DashboardAnalyticsPeriod {
   visits: number
   unique_visitors: number
-  prompt_access: number
-  prompt_copies: number
+  item_access: number
+  item_copies: number
 }
 
 export interface DashboardStats {

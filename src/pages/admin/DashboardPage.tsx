@@ -203,8 +203,8 @@ export default function DashboardPage() {
               title={t('dashboard.today')}
               visits={stats.analytics.today.visits}
               uniqueVisitors={stats.analytics.today.unique_visitors}
-              promptAccess={stats.analytics.today.prompt_access}
-              promptCopies={stats.analytics.today.prompt_copies}
+              promptAccess={stats.analytics.today.item_access}
+              promptCopies={stats.analytics.today.item_copies}
               labels={{
                 visits: t('dashboard.visits'),
                 uniqueVisitors: t('dashboard.uniqueVisitors'),
@@ -217,8 +217,8 @@ export default function DashboardPage() {
               title={t('dashboard.week')}
               visits={stats.analytics.week.visits}
               uniqueVisitors={stats.analytics.week.unique_visitors}
-              promptAccess={stats.analytics.week.prompt_access}
-              promptCopies={stats.analytics.week.prompt_copies}
+              promptAccess={stats.analytics.week.item_access}
+              promptCopies={stats.analytics.week.item_copies}
               labels={{
                 visits: t('dashboard.visits'),
                 uniqueVisitors: t('dashboard.uniqueVisitors'),
@@ -231,8 +231,8 @@ export default function DashboardPage() {
               title={t('dashboard.month')}
               visits={stats.analytics.month.visits}
               uniqueVisitors={stats.analytics.month.unique_visitors}
-              promptAccess={stats.analytics.month.prompt_access}
-              promptCopies={stats.analytics.month.prompt_copies}
+              promptAccess={stats.analytics.month.item_access}
+              promptCopies={stats.analytics.month.item_copies}
               labels={{
                 visits: t('dashboard.visits'),
                 uniqueVisitors: t('dashboard.uniqueVisitors'),
@@ -245,8 +245,8 @@ export default function DashboardPage() {
               title={t('dashboard.year')}
               visits={stats.analytics.year.visits}
               uniqueVisitors={stats.analytics.year.unique_visitors}
-              promptAccess={stats.analytics.year.prompt_access}
-              promptCopies={stats.analytics.year.prompt_copies}
+              promptAccess={stats.analytics.year.item_access}
+              promptCopies={stats.analytics.year.item_copies}
               labels={{
                 visits: t('dashboard.visits'),
                 uniqueVisitors: t('dashboard.uniqueVisitors'),
